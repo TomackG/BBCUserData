@@ -15,24 +15,24 @@ import sklearn.cluster
 # Useful Dictionaries converting strings to integers ##################
 
 platform_dict = {'Mobile' : int(0), 
-				 'Tablet' : int(1), 
-				 'Computer': int(2), 
-				 'Big screen': int(3)}
+		 'Tablet' : int(1), 
+		 'Computer': int(2), 
+		 'Big screen': int(3)}
 
 product_dict = {'sport': 0, 
-				'news': 1, 
-				'bbcthree': 2, 
-				'iplayerradio': 3, 
-				'weather': 4, 
-				'homepageandsearch': 5, 
-				'cbbc': 6, 
-				'music': 7, 
-				'tvandiplayer': 8, 
-				'aboutthebbc': 9, 
-				'knowledge': 10, 
-				'cbeebies': 11, 
-				'travel': 12, 
-				'newsbeat': 13} 
+		'news': 1, 
+		'bbcthree': 2, 
+		'iplayerradio': 3, 
+		'weather': 4, 
+		'homepageandsearch': 5, 
+		'cbbc': 6, 
+		'music': 7, 
+		'tvandiplayer': 8, 
+		'aboutthebbc': 9, 
+		'knowledge': 10, 
+		'cbeebies': 11, 
+		'travel': 12, 
+		'newsbeat': 13} 
 
 
 #######################################################################
@@ -107,9 +107,9 @@ def clean_data_for_analysis():
 	# Turn this dataframe into a dictionary
 
 	users_dict = (users_df.reset_index()
-						  .set_index('user_id')
-						  .to_dict()
-						  )
+			      .set_index('user_id')
+			      .to_dict()
+			      )
 
 	# Map integers to user ids in original dataframe
 
@@ -140,10 +140,10 @@ def visits_per_prod():
 	# Count the number of visits to each type of product and store in dataframe
 
 	sorted_data = (data.groupby('product')['platform']
-					   .count()
-					   .sort_values(ascending=False)
-					   .reset_index()
-					   )
+			   .count()
+			   .sort_values(ascending=False)
+			   .reset_index()
+			   )
 
 	# Express number of visits to each platform as percentage of total visits
 
@@ -200,10 +200,10 @@ def visits_per_platform():
 	# Count the number of visits that came from the different platforms
 
 	sorted_data = (data.groupby('platform')['product']
-					   .count()
-					   .sort_values(ascending=False)
-					   .reset_index()
-					   )
+			   .count()
+			   .sort_values(ascending=False)
+			   .reset_index()
+			   )
 
 	# Express it as a percentage of total visits
 
@@ -349,10 +349,11 @@ def visits_per_product_weekday():
 	# Put them all into a data frame and divide by the number of visits 
 	# to each content type during the week
 
-	full_data = pd.DataFrame(data = [sport/sport.sum()*100, news/news.sum()*100, 
-									 homepageAndSearch/homepageAndSearch.sum()*100, 
-									 tvAndiPlayer/tvAndiPlayer.sum()*100, 
-									 weather/weather.sum()*100]).T
+	full_data = pd.DataFrame(data = [sport/sport.sum()*100, 
+					 news/news.sum()*100, 
+					 homepageAndSearch/homepageAndSearch.sum()*100, 
+					 tvAndiPlayer/tvAndiPlayer.sum()*100, 
+					 weather/weather.sum()*100]).T
 
 	# Plot options
 
@@ -407,10 +408,11 @@ def visits_per_product_weekend():
 	tvAndiPlayer = collated[collated['product']==8]['user_id'].rename('TV and iPlayer')
 	weather = collated[collated['product']==4]['user_id'].rename('Weather')
 
-	full_data = pd.DataFrame(data = [sport/sport.sum()*100, news/news.sum()*100, 
-									 homepageAndSearch/homepageAndSearch.sum()*100, 
-									 tvAndiPlayer/tvAndiPlayer.sum()*100, 
-									 weather/weather.sum()*100]).T
+	full_data = pd.DataFrame(data = [sport/sport.sum()*100, 
+					 news/news.sum()*100, 
+					 homepageAndSearch/homepageAndSearch.sum()*100, 
+					 tvAndiPlayer/tvAndiPlayer.sum()*100, 
+					 weather/weather.sum()*100]).T
 
 	ax = full_data.plot(grid = True)
 
@@ -464,11 +466,11 @@ def user_prod_count():
 	# Put it all in a big data frame
 
 	full_data = pd.DataFrame(index=total_visits.index.astype(int), data = {'Total Visits': total_visits,
-																	'Sport' : sport, 
-																	'News': news, 
-																	'Homepage and Search':homepageAndSearch,
-																	'TV and iPlayer':tvAndiPlayer,
-																	'Weather':weather})
+										'Sport' : sport, 
+										'News': news, 
+										'Homepage and Search':homepageAndSearch,
+										'TV and iPlayer':tvAndiPlayer,
+										'Weather':weather})
 
 	# Replace NaNs with 0.
 
@@ -577,7 +579,9 @@ def k_means_clusters_bar():
 
 	# Create dataframe with cluster centorids from clustering algorithm
 
-	user_clusters = pd.DataFrame(index = ['Sports fans', 'Homepage searchers','News fans', 'Telly fans'],data = km.cluster_centers_*100, columns = data.columns)
+	user_clusters = pd.DataFrame(index = ['Sports fans', 'Homepage searchers','News fans', 'Telly fans'],
+				     data = km.cluster_centers_*100, 
+				     columns = data.columns)
 
 	plt.close()
 
